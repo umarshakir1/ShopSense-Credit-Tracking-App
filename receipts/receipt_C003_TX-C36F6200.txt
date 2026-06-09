@@ -1,0 +1,21 @@
+==================================================
+            SHOPSENSE RETAIL SYSTEM               
+         Udhaar & Credit tracking system          
+==================================================
+  INVOICE ID  : TX-C36F6200
+  CUSTOMER ID : C003
+  CLIENT NAME : Malik
+  PHONE NUMBER: 03351299354
+==================================================
+  TX TYPE     : CREDIT
+  TX DATE     : 2026-05-27
+  CATEGORY    : Medicines
+  DESCRIPTION : General Retail entry
+==================================================
+  TRANSACTION AMOUNT  : Rs. 200.00
+  TOTAL ACCOUNT BAL   : Rs. 100.00
+  CREDIT REMAINING    : Rs. 900.00
+==================================================
+          Thank you for choosing ShopSense!       
+            Software crafted in Java OOP          
+==================================================

@@ -1,0 +1,7 @@
+TX-4093E577|C001|1200.00|2026-05-27|Grocery Purchase|Credit|Groceries
+TX-F936F023|C001|800.00|2026-05-27|Medicine Purchase|Credit|Medicines
+TX-7D1608AB|C001|500.00|2026-05-27|Paid back partially|Payment|
+TX-1B000755|C001|4000.00|2026-05-27|Large Electronics Purchase|Credit|Household
+TX-83A9CF1C|C002|1500.00|2026-05-27|Bulk Milk Cartons|Credit|Groceries
+TX-C36F6200|C003|200.00|2026-05-27||Credit|Medicines
+TX-27C0C7B2|C003|100.00|2026-05-27||Payment|

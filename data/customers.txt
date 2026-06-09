@@ -1,0 +1,3 @@
+C001|Ryan Nasir|03001234567|ryan@domain.com|5000.00
+C002|Umar Wahaj|03112223344|umar@domain.com|1000.00
+C003|Malik|03351299354|umar@gmail.com|1000.00

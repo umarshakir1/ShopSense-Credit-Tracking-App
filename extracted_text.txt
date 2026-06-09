@@ -1,0 +1,154 @@
+﻿
+Lab Session 7 (Open-Ended Lab assignment)Lab Session 7 (Open-Ended Lab assignment)
+Lab Session 7 (Open-Ended Lab assignment)
+Lab Session 7 (Open-Ended Lab assignment)
+
+Open Ended Lab 
+Blooms Taxonomy
+GAs
+Marks
+P2
+C3
+A3
+GA-2
+GA-5
+GA-6
+5
+10
+5
+
+OEL Project Name:
+ShopSense – Smart Credit Tracking & Retail Billing System
+Course Name:
+Object Oriented Programming (OOP)
+Instructor Name:
+Faiza Latif Abbasi
+Slot Timings:
+08:30 to 11:20 - WEDNESDAY
+Semester:
+Spring 2026
+
+Group Members: 
+
+Name
+Student ID
+Muhammad Umar
+74786
+Muhammad Wahaj
+74742
+Muhammad Asim Abbasi
+74844
+Ryan Nasir
+74832
+
+Title:
+ShopSense – Smart Credit Tracking & Retail Billing System
+Concept: 
+This project introduces the concept of applying Object-Oriented Programming (OOP) principles to build a practical, real-world retail management solution. ShopSense is designed to digitize the traditional manual credit register (commonly known as ‘udhaar khata’) used by small shopkeepers in Pakistan and similar markets.
+By leveraging core OOP concepts such as encapsulation, inheritance, polymorphism, and abstraction, the system will be developed in Java with a JavaFX graphical interface. The project demonstrates how OOP methodologies enhance scalability, reusability, and maintainability in software systems. Through practical implementation, students will understand the significance of these concepts in creating robust and user-centric desktop applications..
+Motivation:  
+
+In today’s world of complex software applications, Object-Oriented Programming (OOP) plays a vital role in building scalable, reusable, and maintainable systems. The primary objective of this laboratory is to provide students with practical opportunities to design, implement, and refine software solutions using OOP principles. Through hands-on tasks, students will explore real-world applications, fostering innovation, problem-solving, and the effective application of core OOP concepts like encapsulation, inheritance, polymorphism, and abstraction. This lab bridges the gap between theoretical understanding and practical execution, preparing students for modern software development challenges.
+
+Problem Statement:
+Small shopkeepers in Pakistan  particularly kiryana (grocery) store owners  heavily rely on manual paper-based registers to track customer credit. This traditional approach leads to frequent calculation errors, loss of records, and difficulty in monitoring outstanding balances across multiple customers. There is no real-time alert mechanism when a customer exceeds their credit limit, creating financial risks for the shopkeeper.
+ShopSense addresses this problem by providing a fully digital, OOP-based Java application with a JavaFX interface that enables shopkeepers to manage customer profiles, record and update transactions, and automatically calculate outstanding balances. The system triggers credit limit alerts, supports full CRUD operations, and persists all data using file handling – ensuring records are never lost.
+
+Design / Ways & Means
+Introduction and Requirements
+The system will be developed as a desktop Java application using JavaFX for the GUI. The core objectives are:
+The system will be developed as a desktop Java application using JavaFX for the GUI. The core objectives are:
+Allow shopkeepers to add, view, update, and delete customer records (CRUD).
+Automatically compute and display each customer’s outstanding balance.
+Alert the shopkeeper when a customer’s balance exceeds a set credit limit.
+Search customers by name or ID for quick access.
+Persist all data to files so records survive application restarts.
+Object-Oriented Design
+A UML class diagram will be designed defining all classes, attributes, methods, and relationships. The OOP principles will be applied as follows:
+Encapsulation: All entity attributes (customer name, balance, credit limit, transaction amount) will be declared private with appropriate getters and setters.
+Inheritance: A base class Person will be extended by Customer. A base class Transaction will be extended by CreditTransaction and PaymentTransaction.
+Polymorphism (Overloading): The addTransaction() method will be overloaded to accept different parameter combinations (e.g., with or without date, with or without notes).
+Polymorphism (Overriding): The toString() and calculateBalance() methods will be overridden in derived classes to provide class-specific behavior.
+Abstraction: An abstract class Account will define shared behaviors, and an interface Alertable will be implemented by classes that support credit-limit alerts.
+Interfaces: The Alertable interface will define checkCreditLimit() and sendAlert() methods to be implemented by the Customer class.
+Exception Handling: Custom exceptions such as CustomerNotFoundException and CreditLimitExceededException will be defined and handled gracefully in the UI.
+Basic Implementation
+       The application will consist of the following modules:
+Customer Management Module: Add new customers, edit existing records, delete customers, view complete customer list.
+Transaction Module: Record credit (udhaar) purchases, record cash payments, view full transaction history per customer.
+Balance & Alert Module: Real-time calculation of outstanding balance using ArrayLists, automatic alert notification when credit limit is exceeded.
+Search Module: Search customers by name or ID using loops and conditional logic.
+File Handling Module: Save customer and transaction data to .txt or .dat files, load data on application startup using Java file I/O.
+JavaFX GUI: A clean, responsive interface with dashboards showing total outstanding, credit alerts, and customer list.
+
+
+OOP Concept
+Application in ShopSense
+Loops
+Iterating over ArrayList of customers and transactions for display, search, and balance calculation.
+Conditional Statements
+Checking credit limit thresholds and triggering alerts; validating user inputs in forms.
+Arrays / ArrayList
+Storing the list of Customer objects and their associated Transaction objects dynamically.
+Inheritance
+Customer extends Person; CreditTransaction and PaymentTransaction extend Transaction.
+Abstraction
+Abstract class Account defines shared structure; concrete classes provide implementation.
+Polymorphism – Overloading
+addTransaction() method overloaded with multiple signatures for flexible use.
+Polymorphism – Overriding
+toString() and calculateBalance() overridden in subclasses for specific behavior.
+Interfaces
+Alertable interface implemented by Customer to enforce credit-limit notification contract.
+Exception Handling
+Custom exceptions for missing customers and exceeded limits; try-catch in file I/O and UI.
+File Handling
+Customer and transaction data saved to and loaded from persistent .txt / .dat files.
+JavaFX
+Full graphical desktop UI with forms, tables, alerts, and dashboards built with JavaFX.
+CRUD
+Create, Read, Update, Delete operations for both Customer records and Transaction entries.
+Search
+Search functionality by customer name or ID using linear search through ArrayList.
+
+Performance Testing and Analysis
+The system’s functionality will be tested across the following dimensions:
+Unit Testing: Individual methods such as addTransaction(), calculateBalance(), and checkCreditLimit() will be tested with boundary values.
+Integration Testing: End-to-end scenarios such as adding a customer, recording a credit purchase, and verifying balance update will be validated.
+File Persistence Testing: The application will be closed and reopened to confirm all data is correctly saved and reloaded.
+UI Testing: All JavaFX forms, buttons, and alerts will be tested for correct behavior and error handling.
+.
+Optimization and Advanced Features
+After completing core functionality, the following enhancements will be incorporated:
+Credit Limit Alert System: Popup notifications and highlighted rows in the customer list when a customer’s balance exceeds their defined limit.
+Transaction History View: A dedicated screen showing a filtered list of all transactions for a selected customer with date sorting.
+Dashboard Summary: A home screen displaying total credit given, total payments received, and total outstanding balance.
+Data Validation: Input validation across all forms to prevent incorrect or empty data entry.
+
+Extensions and Creativity
+The group plans to explore the following creative extensions if time permits:
+Printable receipt generation per transaction using Java file output.
+Category-based transaction tagging (e.g., groceries, medicines, household items).
+A simple reporting view showing top-5 customers by outstanding balance.
+Date-range filter on transaction history for monthly review.
+Analysis & Reporting /Answer:
+The final submission will include the following deliverables:
+Background / Theory: Overview of OOP principles used and justification for design decisions.
+UML Class Diagram: Complete diagram showing all classes, relationships, inheritance hierarchies, and interfaces.
+Fully Functional and Well-Documented Code: Java source code with JavaFX GUI, comments on every class and method.
+Output Screenshots: Screenshots demonstrating all major features including CRUD, search, credit alerts, and file persistence.
+Reflection Report:
+Challenges faced during the project.
+How each OOP concept was applied with code-level examples.
+Potential improvements if given more time.
+Analysis: Evaluation of system performance, correctness, and design quality.
+Results: Summary of test cases and outcomes.
+Discussion on Results: Interpretation of what was learned from testing and implementation.
+Concluding Remarks: Summary of project achievements and learning outcomes.
+References: All sources, libraries, and documentation consulted.
+Conclusion:
+ShopSense is a practical, real-world application that directly addresses a problem faced by millions of small shopkeepers across Pakistan. It is not merely an academic exercise but a solution with genuine utility. The project is designed to comprehensively cover all required OOP concepts – Loops, Conditional Statements, Arrays, Inheritance, Abstraction, Polymorphism (Overloading and Overriding), Interfaces, Exception Handling, File Handling, JavaFX, CRUD, and Search – in a structured and meaningful way.
+
+By building ShopSense, the group will gain hands-on experience translating theoretical OOP knowledge into a fully functional desktop application, preparing them for professional software development challenges.
+
+
