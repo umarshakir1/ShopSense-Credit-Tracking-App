@@ -1374,6 +1374,13 @@ public class ShopSenseApp extends Application {
             alert.setTitle("Invoice Created");
             alert.setHeaderText("Receipt exported successfully!");
             alert.setContentText("A beautiful text-based printable invoice has been saved to your receipts folder:\n" + new File(fileName).getAbsolutePath());
+            DialogPane dialogPane = alert.getDialogPane();
+            File cssFile = new File("src/com/shopsense/ui/styles.css");
+            if (cssFile.exists()) {
+                dialogPane.getStylesheets().add(cssFile.toURI().toString());
+            }
+            dialogPane.getStyleClass().add("dialog-pane");
+            dialogPane.setMinHeight(Region.USE_PREF_SIZE);
             alert.showAndWait();
 
         } catch (IOException e) {
@@ -1381,6 +1388,13 @@ public class ShopSenseApp extends Application {
             alert.setTitle("Receipt Error");
             alert.setHeaderText("Unable to print invoice");
             alert.setContentText("Error details: " + e.getMessage());
+            DialogPane dialogPane = alert.getDialogPane();
+            File cssFile = new File("src/com/shopsense/ui/styles.css");
+            if (cssFile.exists()) {
+                dialogPane.getStylesheets().add(cssFile.toURI().toString());
+            }
+            dialogPane.getStyleClass().add("dialog-pane");
+            dialogPane.setMinHeight(Region.USE_PREF_SIZE);
             alert.showAndWait();
         }
     }
@@ -1487,6 +1501,13 @@ public class ShopSenseApp extends Application {
             alert.setTitle("Ledger Statement Exported");
             alert.setHeaderText("Complete Ledger Statement Exported Successfully!");
             alert.setContentText("A detailed chronological ledger history has been generated and saved to:\n" + new File(fileName).getAbsolutePath());
+            DialogPane dialogPane = alert.getDialogPane();
+            File cssFile = new File("src/com/shopsense/ui/styles.css");
+            if (cssFile.exists()) {
+                dialogPane.getStylesheets().add(cssFile.toURI().toString());
+            }
+            dialogPane.getStyleClass().add("dialog-pane");
+            dialogPane.setMinHeight(Region.USE_PREF_SIZE);
             alert.showAndWait();
             
         } catch (IOException e) {
@@ -1494,6 +1515,13 @@ public class ShopSenseApp extends Application {
             alert.setTitle("Export Failure");
             alert.setHeaderText("Unable to export complete ledger");
             alert.setContentText("Error occurred during file operation: " + e.getMessage());
+            DialogPane dialogPane = alert.getDialogPane();
+            File cssFile = new File("src/com/shopsense/ui/styles.css");
+            if (cssFile.exists()) {
+                dialogPane.getStylesheets().add(cssFile.toURI().toString());
+            }
+            dialogPane.getStyleClass().add("dialog-pane");
+            dialogPane.setMinHeight(Region.USE_PREF_SIZE);
             alert.showAndWait();
         }
     }
