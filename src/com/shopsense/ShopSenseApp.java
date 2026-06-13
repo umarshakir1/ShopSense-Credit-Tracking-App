@@ -147,7 +147,9 @@ public class ShopSenseApp extends Application {
     private VBox createSidebar(Stage stage) {
         VBox sidebar = new VBox();
         sidebar.setPrefWidth(250);
-        sidebar.setPadding(new Insets(20));
+        sidebar.setMinWidth(250);
+        sidebar.setMaxWidth(250);
+        sidebar.setPadding(new Insets(20, 15, 20, 15));
         sidebar.setSpacing(10);
         sidebar.getStyleClass().add("sidebar");
 
@@ -218,10 +220,15 @@ public class ShopSenseApp extends Application {
         
         footerBox.getChildren().addAll(lblLab, lblMembers, lblM1, lblM2, lblM3, lblM4);
 
+        Button btnNavExit = new Button("❌  Exit Program");
+        btnNavExit.getStyleClass().add("nav-btn-exit");
+        btnNavExit.setMaxWidth(Double.MAX_VALUE);
+        btnNavExit.setOnAction(e -> confirmAndExit(stage));
+
         Region spacer = new Region();
         VBox.setVgrow(spacer, Priority.ALWAYS);
 
-        sidebar.getChildren().addAll(brandBox, btnNavDashboard, btnNavCustomers, btnNavLedger, btnNavReports, spacer, footerBox);
+        sidebar.getChildren().addAll(brandBox, btnNavDashboard, btnNavCustomers, btnNavLedger, btnNavReports, btnNavExit, spacer, footerBox);
         return sidebar;
     }
 
@@ -292,7 +299,7 @@ public class ShopSenseApp extends Application {
         riskAlertsBox.getStyleClass().add("glass-panel");
         VBox.setVgrow(riskAlertsBox, Priority.ALWAYS);
 
-        Label alertsTitle = new Label("⚠️ ACTIVE CREDIT LIMIT BREACHES (HIGH RISK)");
+        Label alertsTitle = new Label("⚠ ACTIVE CREDIT LIMIT BREACHES (HIGH RISK)");
         alertsTitle.setStyle("-fx-font-family: 'Poppins'; -fx-font-weight: bold; -fx-font-size: 16px; -fx-text-fill: #D94F4F;");
         
         TableView<Customer> riskTable = new TableView<>();
@@ -388,6 +395,7 @@ public class ShopSenseApp extends Application {
 
         Label title = new Label(titleStr);
         title.getStyleClass().add("metric-title");
+        title.setWrapText(true);
 
         valueLabel.getStyleClass().add("metric-value");
 
@@ -516,7 +524,7 @@ public class ShopSenseApp extends Application {
         TableColumn<Customer, String> colStatus = new TableColumn<>("Status");
         colStatus.setCellValueFactory(cell -> {
             boolean overLimit = cell.getValue().checkCreditLimit();
-            return new SimpleStringProperty(overLimit ? "⚠️ BREACH" : "✅ NORMAL");
+            return new SimpleStringProperty(overLimit ? "⚠ BREACH" : "✅ NORMAL");
         });
         colStatus.setCellFactory(col -> new TableCell<Customer, String>() {
             @Override
@@ -765,7 +773,7 @@ public class ShopSenseApp extends Application {
         root.setSpacing(15);
         root.getStyleClass().add("dialog-pane");
 
-        Label title = new Label("⚠️ Delete Customer Profile?");
+        Label title = new Label("⚠ Delete Customer Profile?");
         title.setStyle("-fx-font-weight: bold; -fx-font-size: 18px; -fx-text-fill: #ef4444;");
 
         Label desc = new Label(String.format(
@@ -821,6 +829,7 @@ public class ShopSenseApp extends Application {
     private Label lblLedgerCustBal = new Label("Rs. 0.00");
     private Label lblLedgerCustLimit = new Label("Rs. 0.00");
     private Label lblLedgerCustStatus = new Label("-");
+    private Button btnExportCompleteLedger;
 
     private void setupLedgerView() {
         ledgerView.getChildren().clear();
@@ -880,7 +889,18 @@ public class ShopSenseApp extends Application {
             loadLedgerForSelectedCustomer();
         });
 
-        selectionBar.getChildren().addAll(selectLbl, comboCustomerSelector);
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+        btnExportCompleteLedger = new Button("📄 Export Complete Ledger");
+        btnExportCompleteLedger.getStyleClass().add("btn-primary");
+        btnExportCompleteLedger.setDisable(true);
+        btnExportCompleteLedger.setOnAction(e -> {
+            if (selectedCustomerForLedger != null) {
+                generateAndExportCompleteLedger(selectedCustomerForLedger);
+            }
+        });
+
+        selectionBar.getChildren().addAll(selectLbl, comboCustomerSelector, spacer, btnExportCompleteLedger);
 
         // Account Profile Card and Transaction Entry Panel
         HBox middleLayout = new HBox();
@@ -929,19 +949,17 @@ public class ShopSenseApp extends Application {
         Label actionTitle = new Label("💼 RECORD RETAIL TRANSACTION");
         actionTitle.setStyle("-fx-font-family: 'Poppins'; -fx-font-weight: bold; -fx-text-fill: #7AB342; -fx-font-size: 14px;");
 
-        HBox formRow = new HBox();
-        formRow.setSpacing(15);
+        VBox formRow = new VBox();
+        formRow.setSpacing(10);
 
         Button btnAddCredit = new Button("🛒 Log Credit (Udhaar) Purchase");
         btnAddCredit.getStyleClass().add("btn-primary");
         btnAddCredit.setMaxWidth(Double.MAX_VALUE);
-        HBox.setHgrow(btnAddCredit, Priority.ALWAYS);
         btnAddCredit.setOnAction(e -> openTransactionDialog(true));
 
         Button btnAddPayment = new Button("💵 Record Cash Payment");
         btnAddPayment.getStyleClass().add("btn-success");
         btnAddPayment.setMaxWidth(Double.MAX_VALUE);
-        HBox.setHgrow(btnAddPayment, Priority.ALWAYS);
         btnAddPayment.setOnAction(e -> openTransactionDialog(false));
 
         formRow.getChildren().addAll(btnAddCredit, btnAddPayment);
@@ -1037,7 +1055,7 @@ public class ShopSenseApp extends Application {
                 }
             }
         });
-        colPrint.setPrefWidth(120);
+        colPrint.setPrefWidth(140);
 
         tblLedgerTransactions.getColumns().addAll(colTxId, colType, colAmt, colCategory, colDate, colNotes, colPrint);
         tblLedgerTransactions.setPlaceholder(new Label("Select a customer above to view transaction logs."));
@@ -1063,7 +1081,14 @@ public class ShopSenseApp extends Application {
             lblLedgerCustLimit.setText("Rs. 0.00");
             lblLedgerCustStatus.setText("-");
             tblLedgerTransactions.setItems(FXCollections.observableArrayList());
+            if (btnExportCompleteLedger != null) {
+                btnExportCompleteLedger.setDisable(true);
+            }
             return;
+        }
+
+        if (btnExportCompleteLedger != null) {
+            btnExportCompleteLedger.setDisable(false);
         }
 
         Customer c = selectedCustomerForLedger;
@@ -1080,7 +1105,7 @@ public class ShopSenseApp extends Application {
         }
 
         if (c.checkCreditLimit()) {
-            lblLedgerCustStatus.setText("⚠️ EXCEEDED LIMIT");
+            lblLedgerCustStatus.setText("⚠ EXCEEDED LIMIT");
             lblLedgerCustStatus.setStyle("-fx-text-fill: #D94F4F; -fx-font-family: 'Inter'; -fx-font-weight: bold;");
         } else {
             lblLedgerCustStatus.setText("✅ BALANCE HEALTHY");
@@ -1251,14 +1276,14 @@ public class ShopSenseApp extends Application {
         overrideDecision = false;
         Stage dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);
-        dialog.setTitle("⚠️ Credit Limit Breach Alert");
+        dialog.setTitle("⚠ Credit Limit Breach Alert");
 
         VBox root = new VBox();
         root.setPadding(new Insets(20));
         root.setSpacing(15);
         root.getStyleClass().add("dialog-pane");
 
-        Label title = new Label("⚠️ EXCEPTION: CREDIT LIMIT EXCEEDED");
+        Label title = new Label("⚠ EXCEPTION: CREDIT LIMIT EXCEEDED");
         title.setStyle("-fx-font-weight: bold; -fx-font-size: 16px; -fx-text-fill: #b91c1c;");
 
         TextArea txtMessage = new TextArea(exceptionMessage);
@@ -1356,6 +1381,119 @@ public class ShopSenseApp extends Application {
             alert.setTitle("Receipt Error");
             alert.setHeaderText("Unable to print invoice");
             alert.setContentText("Error details: " + e.getMessage());
+            alert.showAndWait();
+        }
+    }
+
+    private void generateAndExportCompleteLedger(Customer customer) {
+        if (customer == null) return;
+
+        File receiptDir = new File("receipts");
+        if (!receiptDir.exists()) {
+            receiptDir.mkdir();
+        }
+
+        String fileName = String.format("receipts/ledger_%s.txt", customer.getId());
+        
+        try (FileWriter writer = new FileWriter(fileName)) {
+            String doubleBorder = "================================================================================\n";
+            String sectionDivider = "--------------------------------------------------------------------------------\n";
+            String title = "                            SHOPSENSE RETAIL SYSTEM                             \n";
+            String sub = "                       COMPLETE CUSTOMER ACCOUNT STATEMENT                      \n";
+            String dt = "  Generated on: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + "\n";
+            
+            writer.write(doubleBorder);
+            writer.write(title);
+            writer.write(sub);
+            writer.write(doubleBorder);
+            writer.write(dt);
+            writer.write(doubleBorder);
+            
+            // Customer Details
+            writer.write("  CUSTOMER PROFILE DETAILS\n");
+            writer.write(sectionDivider);
+            writer.write(String.format("  Customer ID     : %s\n", customer.getId()));
+            writer.write(String.format("  Customer Name   : %s\n", customer.getName()));
+            writer.write(String.format("  Phone Number    : %s\n", customer.getPhoneNumber()));
+            writer.write(String.format("  Email Address   : %s\n", customer.getEmail().isEmpty() ? "N/A" : customer.getEmail()));
+            writer.write(String.format("  Allowed Limit   : Rs. %.2f\n", customer.getCreditLimit()));
+            
+            double balance = customer.getAccount().calculateBalance();
+            String statusStr = customer.checkCreditLimit() ? "⚠ EXCEEDED CREDIT LIMIT" : "✅ BALANCE HEALTHY";
+            writer.write(String.format("  Account Status  : %s\n", statusStr));
+            writer.write(doubleBorder);
+            
+            // Account Summary
+            double totalCredit = 0;
+            double totalPayment = 0;
+            ArrayList<Transaction> transactions = customer.getAccount().getTransactions();
+            for (Transaction t : transactions) {
+                if (t instanceof CreditTransaction) {
+                    totalCredit += t.getAmount();
+                } else if (t instanceof PaymentTransaction) {
+                    totalPayment += t.getAmount();
+                }
+            }
+            
+            writer.write("  ACCOUNT SUMMARY METRICS\n");
+            writer.write(sectionDivider);
+            writer.write(String.format("  Total Credit Purchases : Rs. %.2f\n", totalCredit));
+            writer.write(String.format("  Total Payments Made    : Rs. %.2f\n", totalPayment));
+            writer.write(String.format("  Current Balance Due    : Rs. %.2f\n", balance));
+            writer.write(String.format("  Remaining Credit limit : Rs. %.2f\n", Math.max(0, customer.getCreditLimit() - balance)));
+            writer.write(doubleBorder);
+            
+            // Transaction Register
+            writer.write("  TRANSACTION HISTORY REGISTER (Chronological - Oldest to Newest)\n");
+            writer.write(doubleBorder);
+            
+            // Table Headers
+            writer.write(String.format("  %-11s | %-12s | %-8s | %-10s | %-12s | %-12s\n", "Date", "Transaction ID", "Type", "Category", "Amount", "Running Bal"));
+            writer.write(sectionDivider);
+            
+            // Sort transactions chronologically (oldest to newest)
+            ArrayList<Transaction> chronologicalTxs = new ArrayList<>(transactions);
+            chronologicalTxs.sort(Comparator.comparing(Transaction::getDate));
+            
+            double runningBalance = 0.0;
+            for (Transaction t : chronologicalTxs) {
+                runningBalance += t.getEffectOnBalance();
+                
+                String cat = "-";
+                if (t instanceof CreditTransaction) {
+                    cat = ((CreditTransaction) t).getCategory();
+                }
+                
+                String notes = t.getNotes().isEmpty() ? "Retail purchase/payment" : t.getNotes();
+                
+                writer.write(String.format("  %-11s | %-14s | %-8s | %-10s | Rs. %-8.2f | Rs. %-9.2f\n", 
+                    t.getDate().toString(), 
+                    t.getTransactionId(), 
+                    t.getTransactionType(), 
+                    cat, 
+                    t.getAmount(), 
+                    runningBalance
+                ));
+                writer.write(String.format("    └─ Notes: %s\n", notes));
+                writer.write(sectionDivider);
+            }
+            
+            writer.write(doubleBorder);
+            writer.write("                       Thank you for choosing ShopSense!                        \n");
+            writer.write("                         Statement Generated Digitally                          \n");
+            writer.write(doubleBorder);
+            
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Ledger Statement Exported");
+            alert.setHeaderText("Complete Ledger Statement Exported Successfully!");
+            alert.setContentText("A detailed chronological ledger history has been generated and saved to:\n" + new File(fileName).getAbsolutePath());
+            alert.showAndWait();
+            
+        } catch (IOException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Export Failure");
+            alert.setHeaderText("Unable to export complete ledger");
+            alert.setContentText("Error occurred during file operation: " + e.getMessage());
             alert.showAndWait();
         }
     }
@@ -1518,4 +1656,51 @@ public class ShopSenseApp extends Application {
         row.getChildren().addAll(labels, pBar);
         return row;
     }
+
+    // Modal dialog to confirm exiting the application
+    private void confirmAndExit(Stage ownerStage) {
+        Stage dialog = new Stage();
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.initOwner(ownerStage);
+        dialog.setTitle("Exit ShopSense");
+
+        VBox root = new VBox();
+        root.setPadding(new Insets(20));
+        root.setSpacing(15);
+        root.getStyleClass().add("dialog-pane");
+
+        Label title = new Label("❌ Exit Application");
+        title.setStyle("-fx-font-weight: bold; -fx-font-size: 16px; -fx-text-fill: #D94F4F;");
+
+        Label desc = new Label("Are you sure you want to close the ShopSense Credit Tracking System?");
+        desc.setStyle("-fx-text-fill: #475569; -fx-font-size: 13px;");
+
+        HBox btnBox = new HBox();
+        btnBox.setAlignment(Pos.CENTER_RIGHT);
+        btnBox.setSpacing(10);
+
+        Button btnCancel = new Button("No, Stay");
+        btnCancel.getStyleClass().add("btn-secondary");
+        btnCancel.setOnAction(e -> dialog.close());
+
+        Button btnExit = new Button("Yes, Close");
+        btnExit.getStyleClass().add("btn-danger");
+        btnExit.setOnAction(e -> {
+            dialog.close();
+            ownerStage.close();
+            System.exit(0);
+        });
+
+        btnBox.getChildren().addAll(btnCancel, btnExit);
+        root.getChildren().addAll(title, desc, btnBox);
+
+        Scene scene = new Scene(root, 420, 160);
+        File cssFile = new File("src/com/shopsense/ui/styles.css");
+        if (cssFile.exists()) {
+            scene.getStylesheets().add(cssFile.toURI().toString());
+        }
+        dialog.setScene(scene);
+        dialog.showAndWait();
+    }
 }
+
