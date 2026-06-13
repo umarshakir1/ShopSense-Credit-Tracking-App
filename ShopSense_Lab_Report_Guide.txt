@@ -1,0 +1,246 @@
+SHOPSENSE LAB REPORT WRITING GUIDE
+
+Welcome to the ShopSense Lab Report Writing Guide! This document is designed like a friendly, step-by-step walkthrough written by a senior student to help you draft a high-scoring lab report. Each section matches the exact requirements of your OOP open-ended lab assignment for Spring 2026 at Iqra University under Ma'am Faiza Latif Abbasi.
+
+Just follow this guide from top to bottom, fill in the placeholders with your code and screenshots, and compile it into your final document.
+
+
+SECTION 1: TITLE PAGE
+
+This is the first page of your report. It needs to look clean, academic, and professional. Center-align the text on this page.
+
+Include these exact details:
+- Project Title: ShopSense - Smart Credit Tracking and Retail Billing System
+- Course Name: Object Oriented Programming (CS-211)
+- Instructor Name: Ms. Faiza Latif Abbasi
+- Semester: Spring 2026
+- Institution: Iqra University
+- Group Members and Student IDs:
+  * Ryan Nasir (ID: 74832)
+  * Muhammad Umar (ID: 74786)
+  * Muhammad Wahaj (ID: 74742)
+  * M. Asim Abbasi (ID: 74844)
+
+
+SECTION 2: TABLE OF CONTENTS
+
+Create a standard table of contents page showing all headings and subheadings with page numbers. Here is the list of headings you must include in order:
+
+1. Title Page
+2. Table of Contents
+3. Introduction
+4. Motivation / Background Theory
+5. Problem Statement
+6. System Design / UML Class Diagram
+7. OOP Concepts Applied
+   7.1 Encapsulation
+   7.2 Inheritance
+   7.3 Abstraction
+   7.4 Polymorphism - Overloading
+   7.5 Polymorphism - Overriding
+   7.6 Interfaces
+   7.7 Exception Handling
+   7.8 File Handling
+   7.9 ArrayLists / Data Structures
+   7.10 CRUD Operations
+   7.11 Search
+   7.12 JavaFX GUI
+8. Modules Overview
+9. Testing
+   9.1 Unit Testing
+   9.2 Integration Testing
+   9.3 File Persistence Testing
+   9.4 UI Testing
+10. Results & Discussion
+11. Reflection Report
+    11.1 Challenges Faced
+    11.2 Applied OOP Recap
+    11.3 Future Extensions
+12. Conclusion
+13. References
+
+
+SECTION 3: INTRODUCTION
+
+In this section, write a single comprehensive paragraph introducing ShopSense. 
+
+Here is what you should cover:
+Introduce ShopSense as a Java desktop application built to digitize traditional manual paper-based ledger registers, commonly known as "udhaar registers" or "udhaar khata," which are used by small-scale retail shopkeepers ("kiryana shops") across Pakistan. Explain that the app provides small shopkeepers with a simple, automated, and secure way to track outstanding customer credit, record customer profiles, log credit purchases and repayments, check credit limit safety thresholds in real-time, print individual customer receipts, and view visual charts summarizing credit activities. Highlight that this app directly transitions small shopkeepers from paper registers prone to damage, miscalculations, and loss to a modern, digital interface.
+
+
+SECTION 4: MOTIVATION / BACKGROUND THEORY
+
+Explain why Object-Oriented Programming (OOP) was chosen for the ShopSense application instead of procedural programming. 
+
+Write these points in your background theory section:
+OOP provides the perfect blueprint for building billing and credit tracking applications because real-world entities map directly to software objects. In ShopSense, the store keeper deals with concrete concepts like "Customers" and "Transactions". Creating dedicated classes for these concepts makes the code logical, reusable, and easy to maintain. 
+
+Next, define how each OOP concept benefits ShopSense:
+- Encapsulation: Prevents unauthorized modification of sensitive credit limits and balances by keeping class variables private and exposing them only through controlled getter and setter methods.
+- Inheritance: Reduces code repetition. By creating a parent class like Person, we can reuse fields like name and phone number inside the Customer subclass without writing them twice.
+- Polymorphism: Allows us to treat different transaction types (purchases vs. payments) uniformly while execution behavior changes dynamically depending on the active object.
+- Abstraction: Simplifies complex operations. We can define abstract layouts for accounts and transactions, hiding complex calculations from the user interface.
+- Interfaces: Creates strict behavioral rules. By using an Alertable interface, we guarantee that any customer class we implement in the future will contain credit limit validation.
+- Exception Handling: Ensures the program does not crash when mistakes happen. It intercepts credit breaches or missing database records and shows friendly warning dialogs instead of error logs.
+- File Handling: Guarantees that data is persistent. Saving credit records to text files ensures shopkeepers do not lose customer information when they close the program.
+
+
+SECTION 5: PROBLEM STATEMENT
+
+Describe the real-world operational challenges faced by kiryana store owners in Pakistan.
+
+Detail the following problems in your report:
+Small shopkeepers in Pakistan extensively sell goods on credit (udhaar) to regular local families to build customer loyalty. To track this, they use traditional paper pocketbooks or registers. This manual system has massive drawbacks:
+1. Paper registers easily get torn, lost, wet, or destroyed.
+2. Manually calculating balances for dozens of customers leads to mathematical errors, causing financial losses.
+3. There is no real-time check to prevent a customer from exceeding their credit limit, leading to uncontrolled bad debts.
+4. Generating history reports or receipt invoices manually is slow and tedious.
+
+Then, explain the solution:
+ShopSense digitally solves these problems by providing an automated desktop ledger. It calculates balances instantly, stores records safely on a storage device, alerts the merchant if a customer tries to buy past their credit limit, and generates printable invoices in a click.
+
+
+SECTION 6: SYSTEM DESIGN / UML CLASS DIAGRAM
+
+In this section, describe the structure of the ShopSense classes and how they connect with one another.
+
+Write this explanation:
+The system uses a logical hierarchy. Person is the base class containing basic contact details, which is inherited by the Customer subclass. The Customer class implements the Alertable interface to enable credit-safety checks. Every Customer object contains a CustomerAccount object, representing a composition relationship (a customer has an account). Account is an abstract class defining how transactions are managed. CustomerAccount extends Account and holds an ArrayList of polymorphic Transaction objects. Transaction is an abstract base class inherited by CreditTransaction (representing credit purchases) and PaymentTransaction (representing cash repayments).
+
+Under this text, place the following placeholder:
+[Place UML Class Diagram image here]
+
+
+SECTION 7: OOP CONCEPTS APPLIED
+
+In this section, write a dedicated subsection for each OOP concept applied in the codebase.
+
+SUBSECTION 7.1: ENCAPSULATION
+Explain that encapsulation hides variables inside a class and makes them accessible only via public getters and setters. In ShopSense, fields like a customer's name, phone number, and credit limit are kept private. This prevents the UI or outside classes from modifying credit parameters directly without validation.
+[Place Customer.java code here]
+
+SUBSECTION 7.2: INHERITANCE
+Explain that inheritance allows a subclass to acquire properties of a superclass. In ShopSense, Customer inherits shared properties (id, name, phoneNumber, email) from the Person class. Additionally, CreditTransaction and PaymentTransaction inherit transactionId, amount, date, and notes from the abstract Transaction class. This eliminates duplicate fields.
+[Place Person.java code here]
+[Place Customer.java code here]
+[Place Transaction.java code here]
+[Place CreditTransaction.java code here]
+[Place PaymentTransaction.java code here]
+
+SUBSECTION 7.3: ABSTRACTION
+Explain that abstraction defines structure without specifying all implementation details. In ShopSense, Account is an abstract class that outlines the transaction list and defines the abstract method calculateBalance(). The concrete subclass CustomerAccount provides the specific implementation of calculateBalance() by summing up the values in the transaction ledger.
+[Place Account.java code here]
+
+SUBSECTION 7.4: POLYMORPHISM - OVERLOADING
+Explain that method overloading allows a class to define multiple methods with the same name but different parameter list signatures. In ShopSense, CustomerAccount overloads the addTransaction() method to allow recording transactions in different scenarios: with amount and notes only, with an added date, or with an added category (for credit purchases).
+[Place relevant method code from TransactionManager.java here]
+
+SUBSECTION 7.5: POLYMORPHISM - OVERRIDING
+Explain that method overriding allows a subclass to provide a specific implementation of a method that is already defined in its parent class or superclass. In ShopSense, calculateBalance() is overridden in CustomerAccount to implement the summing logic. In addition, toString() is overridden in Customer to customize how customer information is formatted for UI dropdowns.
+[Place relevant overriding methods code here]
+
+SUBSECTION 7.6: INTERFACES
+Explain that an interface is a completely abstract type that defines a contract of behaviors that implementing classes must satisfy. The Alertable interface defines two methods: checkCreditLimit() and sendAlert(). The Customer class implements Alertable, ensuring it has native logic to determine if a customer's balance has exceeded their limit and trigger alerts.
+[Place Alertable.java code here]
+[Place checkCreditLimit() and sendAlert() implementation here]
+
+SUBSECTION 7.7: EXCEPTION HANDLING
+Explain that exception handling captures errors during runtime and redirects the program flow gracefully. In ShopSense, we created CustomerNotFoundException and CreditLimitExceededException. When a transaction causes a customer to go over limit, CreditLimitExceededException is thrown, caught in the JavaFX UI layer, and displayed as a clean alert popup allowing the user to override or cancel.
+[Place CustomerNotFoundException.java code here]
+[Place CreditLimitExceededException.java code here]
+
+SUBSECTION 7.8: FILE HANDLING
+Explain that file handling reads and writes files on the disk to save customer ledger accounts. The StorageManager handles reading and writing data in pipe-separated text format (customers.txt and transactions.txt) during application start and shut down, keeping the database intact.
+[Place FileHandler.java code here]
+
+SUBSECTION 7.9: ARRAYLISTS / DATA STRUCTURES
+Explain that dynamic arrays (ArrayList) are used to store data in memory because the number of customers and transactions is not fixed. ShopSense uses an ArrayList of Customer objects to keep track of all registered customers, and each CustomerAccount contains an ArrayList of Transaction objects representing the ledger.
+[Place relevant ArrayList usage code here]
+
+SUBSECTION 7.10: CRUD OPERATIONS
+Explain that CRUD represents Create, Read, Update, and Delete actions. The ShopSense GUI enables full CRUD on customer accounts: adding new customer records (Create), displaying records in a table (Read), modifying customer details (Update), and removing accounts (Delete) through intuitive dialog forms.
+[Place CustomerManager.java or relevant CRUD code here]
+
+SUBSECTION 7.11: SEARCH
+Explain that a search system is necessary to quickly retrieve accounts in a growing list. ShopSense implements a linear search algorithm. As the shopkeeper types in the search bar, the program iterates through the customer ArrayList, checking if the search query matches the ID, Name, or Phone Number, and filters the table view instantly.
+[Place search method code here]
+
+SUBSECTION 7.12: JAVAFX GUI
+Describe the JavaFX user interface of ShopSense. It consists of a sidebar navigation panel (Dashboard, Customer List, Udhaar Ledger, Analytics & Reports, and Exit Program), dynamic summary cards, custom CSS layout styles, interactive tables with action buttons, forms, and custom styled dialog boxes.
+
+Place this placeholder for each UI screen:
+[Place output screenshot here]
+
+
+SECTION 8: MODULES OVERVIEW
+
+Write a brief summary description for each module of the system:
+1. Customer Management: Handles adding, editing, searching, and deleting customers, and displaying profiles.
+2. Transaction Module: Handles logging credit purchases (specifying categories like Groceries, Medicines, Household, or Others) and repayments.
+3. Balance & Alert Module: Evaluates customer limits dynamically, throwing custom exceptions and launching override modals when limits are breached.
+4. Search Module: Performs real-time filtering of customers in the TableView based on name, ID, or phone inputs.
+5. File Handling Module: Reads and writes the text files to persist customer accounts and transaction histories on disk.
+6. Dashboard: Displays metrics cards (Total Outstanding, Total Credit, Total Payments, High-Risk counts) and visual analytics charts.
+
+
+SECTION 9: TESTING
+
+SUBSECTION 9.1: UNIT TESTING
+Explain that unit testing evaluates individual methods in isolation. The ShopSenseTest class runs tests on calculateBalance(), checkCreditLimit(), and exception throwing to verify backend correctness.
+[Place unit test results or output screenshot here]
+
+SUBSECTION 9.2: INTEGRATION TESTING
+Explain that integration testing verifies that modules work together. To test this, you add a new customer, log a credit transaction, log a payment, and verify that the outstanding balance computes correctly.
+[Place output screenshot here]
+
+SUBSECTION 9.3: FILE PERSISTENCE TESTING
+Explain that persistence testing verifies data survival. Record a transaction, close the application, relaunch the app, and verify that the balance loads identical data from the txt files.
+[Place output screenshot here]
+
+SUBSECTION 9.4: UI TESTING
+Explain that UI testing verifies buttons, forms, CSS styling, and alerts. Test clicking the "Exit Program" button to confirm that the styled confirmation modal opens and terminates the process correctly.
+[Place output screenshot here]
+
+
+SECTION 10: RESULTS & DISCUSSION
+
+Summarize the results of the project:
+The ShopSense credit tracking application successfully meets all objectives. It replaces paper registers with a reliable, digital ledger. Balances update instantly, and credit alerts prevent kiryana shops from issuing unsafe credit. The custom light Green & White CSS theme offers a professional and clean design. 
+
+Mention limitations:
+The application uses local text files for database storage, which is suitable for single-device operations. For multi-store synchronization, a cloud-based SQL database would be a future improvement.
+
+
+SECTION 11: REFLECTION REPORT
+
+SUBSECTION 11.1: CHALLENGES FACED
+Explain the technical challenges encountered during development:
+1. JavaFX Library Linking: Running JavaFX without Maven/Gradle required downloading the standalone SDK and setting up custom runtime command arguments (`--module-path` and `--add-modules`).
+2. Text Styling Contrast: Ensuring text and action buttons remained fully visible on odd/even alternating row colors in the JavaFX TableView.
+3. Git Setup: Resolving Git identity errors during initial repository commits.
+
+SUBSECTION 11.2: APPLIED OOP RECAP
+Briefly recap how using OOP helped keep the project structured. Mention that Encapsulation made data fields secure, Abstraction allowed clear definitions of classes, Inheritance kept code clean and modular, and Polymorphism allowed flexible handling of transactions.
+
+SUBSECTION 11.3: FUTURE EXTENSIONS
+Identify features implemented as creative extensions:
+- Printable receipts generated as structured text files under a receipts directory.
+- Category tagging for credit transactions (Groceries, Medicines, Household, Others).
+- Analytical reports displaying top-5 debtor bars and category breakdowns.
+- A date-range filter for statement retrieval.
+- A styled exit program modal.
+
+
+SECTION 12: CONCLUSION
+
+Conclude the report:
+ShopSense demonstrates how object-oriented programming can solve real-world problems in Pakistan's retail sector. By applying encapsulation, inheritance, polymorphism, abstraction, and custom exceptions, we built a modular desktop tool that automates credit registers. Working on this open-ended lab enhanced our understanding of JavaFX GUI layout, file handling, and code collaboration using Git.
+
+
+SECTION 13: REFERENCES
+
+Provide reference citations for your report:
+1. Oracle Java Documentation: Java SE 21 APIs (https://docs.oracle.com/en/java/javase/21/)
+2. OpenJFX documentation: Getting Started with JavaFX (https://openjfx.io/)
+3. Herbert Schildt, "Java: The Complete Reference", 12th Edition, McGraw Hill.
+4. Y. Daniel Liang, "Introduction to Java Programming and Data Structures", Pearson.
